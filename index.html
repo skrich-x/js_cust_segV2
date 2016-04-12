@@ -1,0 +1,227 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+
+  <title>Johnstone Customer Info</title>
+  <meta name="description" content="My Parse App">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+  <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link href='https://fonts.googleapis.com/css?family=Kurale|Raleway:400,500' rel='stylesheet' type='text/css'>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+</head>
+
+<body>
+
+  <body>
+
+    <div id="main">
+
+        <div class="header-container pure-u-24-24">
+          <img class="pure-img pure-u-8-24 johnstone-logo" src="JS_square_logo.png">
+        </div>
+
+          <h2 class="rsvp-header">Johnstone Customer Information</h2>
+
+          <form id="customer-form" name="customer-form" class="pure-form pure-form-stacked pure-u-18-24">
+
+            <div class="form-input">
+              <label>Branch</label>
+              <select id="branch-name">
+                <option>Augusta</option>
+                <option>Fayetteville</option>
+                <option>Monroe</option>
+                <option>Murrels Inlet</option>
+              </select>
+            </div>
+
+            <div class="form-input">
+              <label>Company Name</label>
+              <input id="company-name" name="company-name" maxlength="50" value="" type="text" placeholder="Company Name" required>
+            </div>
+
+            <div class="form-input">
+              <label>Account Number</label>
+              <input id="account-number" name="account-number" maxlength="12" value="" type="text" placeholder="Account Number">
+            </div>
+
+            <div class="form-input">
+              <label>Customer Name</label>
+              <input id="customer-name" name="customer-name" maxlength="70" value="" type="text" placeholder="Customer Name" required>
+            </div>
+
+            <div class="form-input">
+              <label>Job Title</label>
+              <input id="customer-title" name="customer-title" maxlength="70" value="" type="text" placeholder="Job Title" required>
+            </div>
+
+            <div class="form-input">
+              <label>Email Address</label>
+              <input id="customer-email" name="customer-email" maxlength="70" value="" type="text" placeholder="Email Address" required>
+            </div>
+            <div class="form-input">
+              <label>Office Phone</label>
+              <input id="customer-office-phone" name="customer-office-phone" maxlength="70" value="" type="text" placeholder="Office Phone">
+            </div>
+            <div class="form-input">
+              <label>Mobile Phone</label>
+              <input id="customer-mobile-phone" name="customer-mobile-phone" maxlength="70" value="" type="text" placeholder="Mobile Phone">
+            </div>
+
+            <div class="form-input">
+              <label>Which best describes your company?</label>
+              <select id="company-description">
+                <option>Trade company (HVAC, Refrigeration, Plumbing or Mechanical)</option>
+                <option>Commercial establishment (such as office, retail store, hotel, etc.)</option>
+                <option>Educational facility (school district, college, university)</option>
+                <option>Government facility</option>
+              </select>
+            </div>
+
+            <div class="form-input">
+              <label>How many total installers and technicians are on staff?</label>
+              <select id="company-installers">
+                <option>25 or more</option>
+                <option>10 to 24</option>
+                <option>6 to 9</option>
+                <option>2 to 5</option>
+                <option>1</option>
+                <option>None</option>
+              </select>
+            </div>
+            <!-- Input entries for Trade Companies only go here -->
+            <h3 class="trade-input">For Trade Companies Only:</h3>
+
+            <div class="form-input">
+              <label>What is your company’s primary business focus?</label>
+              <select id="company-primary">
+                <option>Not a Trade Company</option>
+                <option>Residential</option>
+                <option>Light Commercial</option>
+                <option>Refrigeration</option>
+                <option>Plumbing</option>
+                <option>Mechanical</option>
+                <option>None</option>
+              </select>
+            </div>
+
+            <div class="form-input">
+              <label>What is your company’s secondary business focus?</label>
+              <select id="company-secondary">
+                <option>Not a Trade Company</option>
+                <option>Residential</option>
+                <option>Light Commercial</option>
+                <option>Refrigeration</option>
+                <option>Plumbing</option>
+                <option>Mechanical</option>
+                <option>None</option>
+              </select>
+            </div>
+
+            <div class="form-input">
+              <label>Which of the following types of work does your company do? (check all that apply)<label>
+              <label for="new-construction" class="pure-checkbox"><input id="new-construction" type="checkbox" value="Installation/New Construction">Equipment installation in new construction</label>
+              <label for="retrofit" class="pure-checkbox"><input id="retrofit" type="checkbox" value="Installation/Retrofit">Equipment installation / retrofit in existing buildings</label>
+              <label for="repair" class="pure-checkbox"><input id="repair" type="checkbox" value="Repair/Maintenance">Repair and maintenance</label>
+            </div>
+
+            <div class="form-input">
+              <input id="customer-submit" class="pure-button" type="submit" value="Submit Support Ticket" />
+            </div>
+
+          </form>
+      </div>
+
+      <div id="thank-you" class="hidden">
+        <h2>Thank you for helping us keep your information up to date!</h2>
+      </div>
+  <script type="text/javascript">
+    Parse.initialize("CTe7IvPIO7sLsKdCMkgHkBdm0NgHHeZaKlGDWo5d", "6YgTyO839OLfAEZTY2mt8E3rDMtFQ2v8yCn0NGYj");
+
+    var Customer = Parse.Object.extend("Customer");
+
+    $("#customer-form").submit(function(event){
+        event.preventDefault();
+          var branch = $("#branch-name").val();
+          var companyName = $("#company-name").val();
+          var accountNumber = $("#account-number").val();
+          var customerName = $("#customer-name").val();
+          var customerTitle = $("#customer-title").val();
+          var customerEmail = $("#customer-email").val();
+          var customerOfficePhone = $("#customer-office-phone").val();
+          var customerMobilePhone = $("#customer-mobile-phone").val();
+          var companyDescription = $("#company-description").val();
+          var companyInstallers = $("#company-installers").val();
+          var companyPrimary = $("#company-primary").val();
+          var companySecondary = $("#company-secondary").val();
+          var newConstruction = $("#new-construction").val();
+          var retrofit = $("#retrofit").val();
+          var repair = $("#repair").val();
+
+          var newCustomer = new Customer();
+          newCustomer.set("branch", branch);
+          newCustomer.set("companyName", companyName);
+          newCustomer.set("accountNumber", accountNumber);
+          newCustomer.set("customerName", customerName);
+          newCustomer.set("customerTitle", customerTitle);
+          newCustomer.set("customerEmail", customerEmail);
+          newCustomer.set("customerOfficePhone", customerOfficePhone);
+          newCustomer.set("customerMobilePhone", customerMobilePhone);
+          newCustomer.set("companyDescription", companyDescription);
+          newCustomer.set("companyInstallers", companyInstallers);
+          newCustomer.set("companyPrimary", companyPrimary);
+          newCustomer.set("companySecondary", companySecondary);
+          newCustomer.set("newConstruction", newConstruction);
+          newCustomer.set("retrofit", retrofit);
+          newCustomer.set("repair", repair);
+
+          newCustomer.save({
+            success: function (){
+              console.log("saved");
+              $("#customer-form").hide();
+              $("#thank-you").removeClass("hidden");
+
+            }, error: function(error){
+              console.log("Error:"+error.message);
+            }
+          });
+    });
+
+    // var Mailgun = require('mailgun');
+    // Mailgun.initialize('sandboxd2064f0b8f7a41cd8ec4a3b3288ae134.mailgun.org', 'pubkey-cc5d6cd3d56ff18849a5fc4de3235973');
+    //
+    // Parse.Cloud.beforeSave("CommentObject", function(request, response) {
+    //
+    // 	var text = "Support Ticket\n" +
+    // 		"Branch: "+request.object.get("branch") + "\n"+
+    // 		"Name: "+request.object.get("customerName") + "\n"+
+    // 		"Company: "+request.object.get("companyName") + "\n"+
+    // 		"Email: "+request.object.get("customerEmail") + "\n\n"+
+    //     "Office Phone: "+request.object.get("customerOfficePhone") + "\n\n"+
+    // 		"Mobile Phone:\n" + request.object.get("customerMobilePhone");
+    //
+    // 	Mailgun.sendEmail({
+    // 			to: "kyle.richardson@johnstonesupply.com",
+    // 			from: request.object.get("customerEmail"),
+    // 			subject: "Johnstone Support Request - " + request.object.get("companyName"),
+    // 			text: text
+    // 		}, {
+    // 		success: function(httpResponse) {
+    // 			response.success();
+    // 		},
+    // 		error: function(httpResponse) {
+    // 			console.error(httpResponse);
+    // 			response.error("Something went wrong");
+    // 		}
+    // 	});
+    //
+    // });
+
+  </script>
+  <script type="text/javascript" src="parse_cloud/cloud/main.js"></script>
+
+</body>
+
+</html>
